@@ -31,6 +31,12 @@ let player = {
       this.charge -= this.depleteRate;
 
     } else {
+      if (this.isShooting) {
+        this.charge -= this.maxCharge / 2;
+        if (this.charge < 0) {
+          this.charge = 0;
+        }
+      }
       this.isShooting = false;
     }
   },

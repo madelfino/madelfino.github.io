@@ -1,7 +1,8 @@
 class Player {
   constructor() {
-    this.x = 0, this.y = 0;
-    this.theta = 90, this.gamma: 0, this.r = 0;
+    this.x1 = 0, this.y1 = 0;
+    this.x2 = 0, this.y2 = 0;
+    this.theta = 90, this.gamma = 0, this.r = 0;
     this.size = 30, this.speed = 2;
     this.charge = 0.0, this.maxCharge = 100.0, this.chargeRate = 0.7;
     this.depleteRate = 3, this.isShooting = false;
@@ -28,18 +29,28 @@ class Player {
     } else {
       this.chargeColor = color(0, 200, 0);
     }
-    this.x = width / 2 + cos(this.theta) * this.r;
-    this.y = height / 2 + sin(this.theta) * this.r;
+    this.x1 = width / 2 + cos(this.theta + this.gamma) * this.r;
+    this.y1 = height / 2 + sin(this.theta + this.gamma) * this.r;
+
+    this.x2 = width / 2 + cos(this.theta - this.gamma + 180) * this.r;
+    this.y2 = height / 2 + sin(this.theta - this.gamma + 180) * this.r;
+
     if (keyIsDown(this.leftKey)) {
       this.theta += this.speed;
     }
     if (keyIsDown(this.rightKey)) {
       this.theta -= this.speed;
     }
+    if (keyIsDown(this.upKey)) {
+      this.gamma += this.speed / 2;
+    }
+    if (keyIsDown(this.downKey)) {
+      this.gamma -= this.speed / 2;
+    }
+
     if (keyIsDown(this.laserKey) && (this.charge == this.maxCharge || (this.isShooting && this.charge > 0))) {
       this.isShooting = true;
       this.charge -= this.depleteRate;
-
     } else {
       if (this.isShooting) {
         this.charge -= this.maxCharge / 2;
@@ -52,19 +63,23 @@ class Player {
   }
 
   draw() {
+    strokeWeight(1);
+    noFill();
+    stroke(200, 0, 0);
+    line(this.x1, this.y1, this.x2, this.y2);
     noStroke();
     fill(this.bodyColor);
-    circle(this.x, this.y, this.size);
+    circle(this.x1, this.y1, this.size);
     fill(this.chargeColor);
-    circle(this.x, this.y, 1 + this.size * (this.charge/this.maxCharge));
+    circle(this.x1, this.y1, 1 + this.size * (this.charge/this.maxCharge));
     noFill();
     strokeWeight(2);
     stroke(this.chargeColor);
-    circle(width - this.x, height - this.y, this.size);
+    circle(this.x2, this.y2, this.size);
     if (this.isShooting) {
       strokeWeight(this.size * (this.charge / this.maxCharge) + 2);
       stroke(this.fullChargeColor);
-      line(this.x, this.y, width - this.x, height - this.y);
+      line(this.x1, this.y1, this.x2, this.y2);
     }
   }
 }

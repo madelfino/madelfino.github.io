@@ -16,7 +16,7 @@ function setup() {
     down: 83, //S
     left: 65, //A
     right: 68, //D
-    laser: 32//SPACE_BAR
+    laser: 32 //SPACE_BAR
   });
   p2.bodyColor = color(200, 0, 0);
   p2.theta = 0;

@@ -5,18 +5,22 @@ function setup() {
   angleMode(DEGREES);
   createCanvas(600, 600);
   p1.setup({
-    up: UP_ARROW,
-    down: DOWN_ARROW,
+    up: 65, //UP_ARROW,
+    down: 68, //DOWN_ARROW,
     left: LEFT_ARROW,
     right: RIGHT_ARROW,
-    laser: ENTER
+    laser: ENTER,
+    rotate: true,
+    scale: false
   });
   p2.setup({
     up: 87, //W
     down: 83, //S
-    left: 65, //A
-    right: 68, //D
-    laser: 32 //SPACE_BAR
+    left: UP_ARROW, //65, //A
+    right: DOWN_ARROW, //68, //D
+    laser: 32, //SPACE_BAR
+    rotate: false,
+    scale: true
   });
   p2.bodyColor = color(200, 0, 0);
   p2.theta = 0;

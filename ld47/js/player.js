@@ -19,6 +19,8 @@ class Player {
     this.chargeColor = color(0, 200, 0);
     this.fullChargeColor = color(222, 222, 0);
     this.r = width / 2 - this.size / 2;
+    this.canRotate = info.rotate;
+    this.canScale = info.scale;
   }
 
   update() {
@@ -35,17 +37,17 @@ class Player {
     this.x2 = width / 2 + cos(this.theta - this.gamma + 180) * this.r;
     this.y2 = height / 2 + sin(this.theta - this.gamma + 180) * this.r;
 
-    if (keyIsDown(this.leftKey)) {
+    if (this.canRotate && (keyIsDown(this.leftKey) || keyIsDown(this.upKey))) {
       this.theta += this.speed;
     }
-    if (keyIsDown(this.rightKey)) {
+    if (this.canRotate && (keyIsDown(this.rightKey) || keyIsDown(this.downKey))) {
       this.theta -= this.speed;
     }
-    if (keyIsDown(this.upKey)) {
-      this.gamma += this.speed / 2;
-    }
-    if (keyIsDown(this.downKey)) {
+    if (this.canScale && (keyIsDown(this.upKey) || keyIsDown(this.leftKey))) {
       this.gamma -= this.speed / 2;
+    }
+    if (this.canScale && (keyIsDown(this.downKey) || keyIsDown(this.rightKey))) {
+      this.gamma += this.speed / 2;
     }
 
     if (keyIsDown(this.laserKey) && (this.charge == this.maxCharge || (this.isShooting && this.charge > 0))) {
@@ -65,7 +67,7 @@ class Player {
   draw() {
     strokeWeight(1);
     noFill();
-    stroke(200, 0, 0);
+    stroke(this.bodyColor);
     line(this.x1, this.y1, this.x2, this.y2);
     noStroke();
     fill(this.bodyColor);

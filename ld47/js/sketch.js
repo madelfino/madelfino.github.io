@@ -5,10 +5,12 @@ function setup() {
 }
 
 function draw() {
-  background(220);
+  bgColor = color(220);
+  background(bgColor);
+  noStroke();
   fill(255);
   circle(width/2, height/2, width);
-  fill(220);
+  fill(bgColor);
   circle(width/2, height/2, width - player.size * 2);
 
   player.update();

@@ -1,6 +1,7 @@
-p1 = new Player();
-p2 = new Player();
-enemyManager = new EnemyManager([p1, p2]);
+let p1 = new Player();
+let p2 = new Player();
+let enemyManager = new EnemyManager([p1, p2]);
+let score = 0;
 
 function setup() {
   angleMode(DEGREES);
@@ -41,7 +42,11 @@ function draw() {
     textSize(24);
     fill(255);
     text("LOOP CONTAINMENT FAILED", 100, 200);
+    text("Final Score: " + floor(score), 100, 300);
   } else {
+    score += 0.1;
+    fill(20);
+    text(floor(score), 10, 10);
     p1.update();
     p2.update();
     enemyManager.update();

@@ -45,6 +45,13 @@ class EnemyManager {
           CollisionDetection.segmentCircleCollision(p1.x1, p1.y1, p1.x2, p1.y2, en.x, en.y, en.size/2) &&
           CollisionDetection.segmentCircleCollision(p2.x1, p2.y1, p2.x2, p2.y2, en.x, en.y, en.size/2))
         ) {
+            score += 10;
+            if (en.type != "O") {
+              score += 40;
+            }
+            if (en.type == "AB") {
+              score += 50;
+            }
             this.enemies[i].color = color(0);
             this.enemies[i].growthRate = -0.5;
       }

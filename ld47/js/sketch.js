@@ -1,5 +1,6 @@
 p1 = new Player();
 p2 = new Player();
+enemyManager = new EnemyManager([p1, p2]);
 
 function setup() {
   angleMode(DEGREES);
@@ -35,9 +36,18 @@ function draw() {
   fill(bgColor);
   circle(width/2, height/2, width - p1.size * 2);
 
-  p1.update();
-  p2.update();
+  if (enemyManager.gameOver) {
+    background(0);
+    textSize(24);
+    fill(255);
+    text("LOOP CONTAINMENT FAILED", 100, 200);
+  } else {
+    p1.update();
+    p2.update();
+    enemyManager.update();
 
-  p1.draw();
-  p2.draw();
+    enemyManager.draw();
+    p1.draw();
+    p2.draw();
+  }
 }
